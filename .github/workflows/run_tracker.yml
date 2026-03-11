@@ -3,8 +3,6 @@ name: Portfolio Tracker
 on:
   schedule:
     - cron: '0 11 * * *'
-    - cron: '0 14 * * *'
-    - cron: '0 15 * * *'
     - cron: '0 16 * * *'
   workflow_dispatch:
 
@@ -14,14 +12,14 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install packages
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: Run script
