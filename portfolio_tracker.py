@@ -8,8 +8,8 @@ buy_price = 39.93
 infos = ticker5.info
 
 print("------")
-print(f"Previous close: {infos.get('regularMarketPreviousClose')}")
-print(f"Market Price: {infos.get('regularMarketPrice')}")
+#print(f"Previous close: {infos.get('regularMarketPreviousClose')}")
+#print(f"Market Price: {infos.get('regularMarketPrice')}")
 
 evolution = round(infos.get('regularMarketPrice')-buy_price,2)
 gain_eur = evolution*quantity5
