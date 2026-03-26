@@ -12,8 +12,8 @@ def get_etf_data():
 
     # Récupération des données clés
     market_price = infos.get('regularMarketPrice')
-    buy_price_list = [39.93;38.715]
-    quantity_list = [5;2]
+    buy_price_list = [39.93,38.715]
+    quantity_list = [5,2]
     
     # Calcul du prix moyen pondéré par les quantités
     weighted_sum = sum(price * qty for price, qty in zip(buy_price_list, quantity_list))
