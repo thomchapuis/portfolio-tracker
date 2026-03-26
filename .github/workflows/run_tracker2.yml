@@ -2,7 +2,7 @@ name: Portfolio Tracker 2
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '0 9,17 * * *'
 
   workflow_dispatch:
 
