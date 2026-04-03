@@ -58,8 +58,8 @@ def plot_history(filename="etf_history.csv"):
         return
 
     df = pd.read_csv(filename)
-    df = df.sort_values("timestamp").set_index("timestamp")
-    df = df.resample("D").last().dropna().reset_index()
+    df["date"] = df["timestamp"].dt.date
+    df = df.groupby("date").last().reset_index()
     print("\nHistorique des données :")
     print(df)
 
