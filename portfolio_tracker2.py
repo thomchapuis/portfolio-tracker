@@ -58,7 +58,21 @@ def plot_history(filename="etf_history.csv"):
         return
 
     df = pd.read_csv(filename)
+    df = pd.read_csv(filename)
+    
+    # Conversion robuste
+    df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
+    
+    # Supprimer les lignes invalides
+    df = df.dropna(subset=["timestamp"])
+    
+    # Trier
+    df = df.sort_values("timestamp")
+    
+    # Extraire la date
     df["date"] = df["timestamp"].dt.date
+    
+    # Garder la dernière valeur par jour
     df = df.groupby("date").last().reset_index()
     print("\nHistorique des données :")
     print(df)
