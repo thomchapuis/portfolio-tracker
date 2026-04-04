@@ -1,0 +1,13 @@
+﻿actif;;action;quantité action;date action;prix action
+BTC;;achat;0,5;26/07/2025;60 000
+BTC;;achat;0,2;26/11/2025;50 000
+BTC;;vente;0,8;26/10/2025;40 000
+BTC;;achat;1,5;27/07/2024;2 000
+BTC;;achat;1,5;26/07/2024;200 000
+ETH;;achat;0,5;26/07/2025;6 000
+ETH;;achat;0,2;26/11/2025;5 000
+ETH;;vente;0,8;26/10/2025;4 000
+ETH;;vente;0,8;26/10/2025;8 000
+ETH;;achat;1,5;26/07/2024;10 000
+FR0013380607;Amundi CAC 40 UCITS ETF - EUR ACC;achat;5;;40
+FR0013380607;Amundi CAC 40 UCITS ETF - EUR ACC;achat;2;;39
