@@ -70,7 +70,8 @@ def load_history(filename="etf_history.csv"):
 # =========================
 st.title("📊 Portfolio Tracker")
 
-tab1, tab2 = st.tabs(["📋 Portefeuille", "📈 Graphique"])
+#tab1, tab2 = st.tabs(["📋 Portefeuille", "📈 Graphique"])
+tab1, tab2, tab3 = st.tabs(["📋 Portefeuille", "📈 Graphique", "➕ Ajouter"])
 
 # =========================
 # TAB 1 : PORTEFEUILLE
@@ -121,3 +122,70 @@ with tab2:
         plt.xticks(rotation=45)
 
         st.pyplot(fig)
+
+
+# =========================
+# TAB 3 : AJOUTER POSITION
+# =========================
+with tab3:
+    st.subheader("➕ Ajouter une position")
+
+    # Inputs utilisateur (équivalent cellules jaunes)
+    ticker_input = st.text_input("Ticker (ex: CACC.PA)")
+    quantity_input = st.number_input("Quantité", min_value=0.0, step=1.0)
+    buy_price_input = st.number_input("Prix d'achat (€)", min_value=0.0)
+
+    if st.button("📡 Récupérer prix live"):
+        if ticker_input:
+            ticker = yf.Ticker(ticker_input)
+            market_price = ticker.info.get("regularMarketPrice")
+
+            if market_price is None:
+                st.error("Impossible de récupérer le prix.")
+            else:
+                st.success(f"Prix live : {market_price} €")
+
+                # =========================
+                # CALCULS (équivalent Excel gris)
+                # =========================
+                evolution = market_price - buy_price_input
+                gain_eur = evolution * quantity_input
+                gain_pct = (evolution / buy_price_input) * 100 if buy_price_input > 0 else 0
+                total_value = market_price * quantity_input
+
+                # Affichage preview
+                st.subheader("📊 Résultat")
+
+                col1, col2, col3 = st.columns(3)
+                col1.metric("Valeur", f"{total_value:.2f} €")
+                col2.metric("Gain €", f"{gain_eur:.2f} €")
+                col3.metric("Gain %", f"{gain_pct:.2f} %")
+
+                # =========================
+                # SAUVEGARDE
+                # =========================
+                if st.button("💾 Sauvegarder cette position"):
+
+                    new_data = {
+                        "timestamp": datetime.now(),
+                        "ticker": ticker_input,
+                        "quantity": quantity_input,
+                        "buy_price": buy_price_input,
+                        "market_price": market_price,
+                        "total_value": total_value,
+                        "gain_eur": gain_eur,
+                        "gain_pct": gain_pct
+                    }
+
+                    df_new = pd.DataFrame([new_data])
+
+                    filename = "portfolio_positions.csv"
+
+                    if os.path.exists(filename):
+                        df_existing = pd.read_csv(filename)
+                        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+                        df_combined.to_csv(filename, index=False)
+                    else:
+                        df_new.to_csv(filename, index=False)
+
+                    st.success("Position sauvegardée !")
